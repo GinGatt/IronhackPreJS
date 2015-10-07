@@ -15,14 +15,22 @@
 // If your code works, the last three equalities will be "true"
 
 
-
+/*
 
 function dniLetter( dni ) {
 
 	var lockup = 'TRWAGMYFPDXBNJZSQVHLCKE';
 	var result = '';
-	result = lockup[dni%23];
-    return result;
+	if (dni.toString().length !==8){
+		return 'Invalid parameter';
+	}
+	else if (isNaN(dni) === true){
+		return 'Invalid parameter';
+	}
+	else {
+		result = lockup[dni%23];
+    	return result;
+    }
 }
 
 console.log( dniLetter( 12345678 ) === 'Z');
@@ -30,7 +38,7 @@ console.log( dniLetter( 34667892 ) === 'S');
 console.log( dniLetter( 92234488 ) === 'A');
 
 
-
+*/
 
 //EXERCISE 2
 //
@@ -39,13 +47,12 @@ console.log( dniLetter( 92234488 ) === 'A');
 // Improve the exercise above to be able to perform this new functionality
 // Of course it has to keep working as usual with right inputs.
 
-/*
 
+/*
 console.log( dniLetter( -1 ) === 'Invalid parameter');
 console.log( dniLetter( "A1234567" ) === 'Invalid parameter');
 
 */
-
 
 //EXERCISE 3
 //
@@ -55,9 +62,15 @@ console.log( dniLetter( "A1234567" ) === 'Invalid parameter');
 // Write a function that takes an array of words and returns the length of the longest one.
 
 /*
-
 function findLongestWord( array_words ){
-
+	var longest, i;
+	longest = array_words[0].length;
+	for (i=0; i< array_words.length; i++){
+		if (array_words[i].length > longest){
+			longest = array_words[i].length;
+		}
+	}
+	return longest;
 }
 
 console.log( findLongestWord( ["Richie", "Joanie", "Greg", "Marcia", "Bobby"] ) ===6 );
@@ -74,8 +87,8 @@ console.log( findLongestWord( ["Red", "Blue", "Green"] ) === 5 );
 // You have to complete the calculateAverage function (it is a few lines below), and it has
 // to return the average of every number in a array instead of the "Not implemented yet" message.
 
-/*
 
+/*
 var array_lengths = [];
 array_lengths.push( findLongestWord( ["Richie", "Joanie", "Greg", "Marcia", "Bobby"]) );
 array_lengths.push( findLongestWord( ["Blanka", "Zangief", "Chun Li", "Guile"] ) );
@@ -87,7 +100,13 @@ console.log( calculateAverage( array_lengths ) === 6 && "The average of longest 
 
 function calculateAverage( array )
 {
-	return( "Not implemented yet" )
+	var sum, avg; 
+	sum = 0;
+	for (var i = 0; i < array.length; i++) {
+		sum += array[i];
+	}
+	avg = sum/array.length;
+	return avg;
 }
 
 // Now add more lengths to the array_lengths. You have to do it where <place to add more lines> is written. 
@@ -102,7 +121,7 @@ function calculateAverage( array )
 //
 // Restore the comments marks (/* */) of the previous exercises. Exercises 4 and 5 have to be commented
 // Uncomment the exercise code deleting /* and */ chars
-// Now we are going to save the longest length of every array in a new array called array_lengths
+//?????? Now we are going to save the longest length of every array in a new array called array_lengths
 // Open the console and reload the index page to see the result of the code.
 // Write a function charFreq() that takes a string and builds a frequency listing of the characters contained in it. 
 // As a condition you must use the object freqCounter.
@@ -110,9 +129,15 @@ function calculateAverage( array )
 
 /*
 
-function charFreq( string ) {
-	freqCounter = {};
-
+function charFreq(string) {
+	freqCounter = { }; //letter, freq
+	for (i = 0; i < string.length; i++) {
+		if (string[i] in freqCounter){
+			freqCounter[string[i]] += 1;
+		}
+		else{
+			freqCounter[string[i]] = 1;
+		}
 	}
 	return freqCounter;
 }
@@ -133,7 +158,6 @@ console.log( counter['f'] === 1 );
 
 */
 
-
 //BONUS EXERCISE
 //
 // Restore the comments marks (/* */) of the previous exercise
@@ -149,7 +173,7 @@ console.log( counter['f'] === 1 );
 // http://www.w3schools.com/js/default.asp
 // Use the search option in both of them to find a function.
 
-/*
+
 
 function arrayAwesomenator( array ) 
 {
@@ -166,7 +190,12 @@ function deleteRubbish( array )
 {
 	//It receives an array and returns it without '*' chars
 	//Example:  deleteRubbish(['a',1,'*',5]) returns ['a',1,5]
-	
+	while (array.indexOf('*') > -1){
+	    var remove_position;
+	    remove_position = array.indexOf('*');
+	    array.splice(remove_position, 1);
+	}
+	return array;
 }
 
 function arrangeElements( array )
@@ -174,12 +203,30 @@ function arrangeElements( array )
 	//It receives an array with numbers and letters mixed and returns it with its items arrange:
 	//First goes the numbers and then the letters. The order of the elements together does not matter.
 	//Example: arrangeElements(['B', 'a', 4 , 23, 'J']) returns [23, 4, 'B', 'a', 'J']
+		for (i = 0; i < array.length; i++) {
+			if(!isNaN(parseFloat(array[i])) && isFinite(array[i])){
+				array.unshift(array[i]);
+				array.splice(i+1, 1);
+			}
+		}
+	return array;
 }
 
 function beautifyLetters( array )
 {
 	//It receives an array with numbers and letters and returns it with uppercase vowels and lowercase consonants. Numbers remain unchanged
 	//Example: beautifyLetters([1,5,7,'a','J',p,'E']) returns [1,5,7,'A','j',p,'E']
+	for (i=0; i<array.length; i++){
+		for (i=0; i<array.length; i++){
+			if(/A|a|E|e|I|i|O|o|U|u/.test(array[i]) === true){
+				array[i] = array[i].toUpperCase();
+			}
+			else if(/\D/.test(array[i]) === true){
+				array[i] = array[i].toLowerCase();
+			}
+		}
+	}
+	return array;
 }
 
 
@@ -192,12 +239,35 @@ function beautifyNumbers( array )
 	// 9956 = 2 because 9+9+5+6 = 29 -> 2+9 = 11 -> 1+1 = 2
 	// 793 = 1 because 7+9+3 = 19 -> 1+9 = 10 -> 1+0 = 1
 	//Example: beautifyNumbers([23,59, 4,'A','b']) returns [5, 5, 4, 'A', 'b']
+	for (var i = 0; i < array.length; i++) {
+		if(!isNaN(parseFloat(array[i])) && isFinite(array[i])){
+			var str, sum;
+		    str = array[i].toString();
+			array.splice(i,1);
+			while(str.length>1){
+			    sum = 0;
+				for (var j = 0; j < str.length; j++) {
+					sum += parseFloat(str[j]);
+				}
+				str = sum;
+				str = str.toString();
+			}
+			str = parseFloat(str);
+			array.splice(i, 0, str);
+		}
+	}
+	return array;	
 }
 
 function sortArray( array )
 {
 	//It receives an array with numbers and letters and returns it with its items sorted. Numbers on one side and letters on the other.
 	//Example: sortArray([5,5, 4, 1, 'j', A','b', 'E']) returns [1, 4, 5, 5, 'A', 'b', 'E', 'j']
+	
+	
+	array.sort();
+	return array;
+
 }
 
 
@@ -205,11 +275,16 @@ function arrayToString( array )
 {
 	//It receives an array and returns a string with all its elements.
 	//Example: arrayToString([1, 4, 5, 5, 'A', 'b', 'E', 'j']) returns "1455AbEj"
+		var string;
+	string = "";
+	for(i=0; i<array.length; i++){
+	    string += array[i].toString();
+	}
+	return string;
 }
 
 console.log(arrayAwesomenator(["a", 6, "B", "F", "*", 8, 78, "J" ]) === "668Abfj");
 console.log(arrayAwesomenator(["*", "j", 6, "A", "F", "*", 8, "C", "b", "a", 78, "J", 43523, 1111, "r", "q", "y" ]) === "46688AAbcfjjqry");
 
-*/
 
 
