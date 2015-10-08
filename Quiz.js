@@ -2,8 +2,8 @@ var user = {}
 var responses = []
 
 function question1() {
-  var name = prompt('What is your name?')
-  user.name = name
+  	var name = prompt('What is your name?')
+  	user.name = name
 }
 
 function question2(){
@@ -97,36 +97,36 @@ function question5(){
 
 function evaluate(responsesArray) {
 // declare two variables to store the totals
-var correct, incorrect;
-correct = [];
-incorrect = [];
+	var correct, incorrect;
+	correct = [];
+	incorrect = [];
 // populate the “totals” variables from the “responsesArray”
-for (var i=0; i < responsesArray.length; i++) {
-	if(responsesArray[i]===true){
-		correct.push(responsesArray[i]);
-	}
-	else if(responsesArray[i]===false){
-		incorrect.push(responsesArray[i]);
-	}
-};
+	for (var i=0; i < responsesArray.length; i++) {
+		if(responsesArray[i]===true){
+			correct.push(responsesArray[i]);
+		}
+		else if(responsesArray[i]===false){
+			incorrect.push(responsesArray[i]);
+		}
+	};
 // save the “totals” variables inside the user object
-var num_correct, num_incorrect;
-num_correct = correct.length;
-num_incorrect = incorrect.length;
-user.correct = num_correct;
-user.incorrect = num_incorrect;
+	var num_correct, num_incorrect;
+	num_correct = correct.length;
+	num_incorrect = incorrect.length;
+	user.correct = num_correct;
+	user.incorrect = num_incorrect;
 
 // call showResults
-showResults();
+	showResults();
 }
 
 function showResults() {
 
 // display the user results
-var score;
-score = 100*(parseFloat(user.correct)/(parseFloat(user.correct)+ parseFloat(user.incorrect)));
-alert('You got '+ user.correct + ' correct and '+ user.incorrect +' incorrect. Your score is a '+ score +' .');
-}
+	var score;
+	score = 100*(parseFloat(user.correct)/(parseFloat(user.correct)+ parseFloat(user.incorrect)));
+	alert('You got '+ user.correct + ' correct and '+ user.incorrect +' incorrect. Your score is a '+ score +' .');
+	}
 
 question1(); 
 question2();
