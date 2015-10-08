@@ -17,7 +17,7 @@ function question2(){
 	}
 	else{
 		alert("Please answer either Yes or No");
-	  return question2();
+	  	return question2();
 	}
 	responses.push(firstQ);
 }
